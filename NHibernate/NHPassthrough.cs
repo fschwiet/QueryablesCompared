@@ -14,15 +14,12 @@ namespace QueryablesCompared.NHibernate
             {
                 using(var session = sessionFactory.OpenSession())
                 {
-                    using (var transaction = session.BeginTransaction())
+                    foreach (var input in inputs)
                     {
-                        foreach (var input in inputs)
-                        {
-                            session.Save(input);
-                        }
-
-                        transaction.Commit();
+                        session.Save(input);
                     }
+
+                    session.Flush();
                 }
             }
 

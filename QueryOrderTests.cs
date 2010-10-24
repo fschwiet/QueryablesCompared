@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
+using QueryablesCompared.NHibernate;
 using Should.Fluent;
 using Should.Fluent.Model;
 
@@ -11,39 +12,29 @@ using QueryableFactory = System.Func<System.Collections.Generic.IEnumerable<Quer
 
 namespace QueryablesCompared
 {
-    public class Foo
-    {
-        public int Value;
-    }
-
-
     [TestFixture]
     class QueryOrderTests
     {
         [Test]
         [TestCaseSource("QueryableImplementations")]
-        public void take_after_sort(QueryableFactory getFooQueryable)
+        public void take_after_sort(Func<IEnumerable<Foo>, QueryableResult<Foo>> getFooQueryable)
         {
             var inputs = Enumerable.Range(0, 20).Select(i => new Foo() {Value = i});
-            var expected = Enumerable.Range(0, 5).Select(i => new Foo() {Value = i}).ToArray();
 
-            var queryable = getFooQueryable(inputs);
+            using (var queryableResult = getFooQueryable(inputs))
+            {
+                var result = queryableResult.Queryable.OrderByDescending(f => f.Value).Take(5).Where(f => f.Value < 5).ToArray();
 
-            var result = queryable.OrderBy(f => f.Value).Take(5).ToArray();
-
-            result.Length.Should().Equal(5);
-            result[0].Value.Should().Equal(0);
-            result[1].Value.Should().Equal(1);
-            result[2].Value.Should().Equal(2);
-            result[3].Value.Should().Equal(3);
-            result[4].Value.Should().Equal(4);
+                result.Length.Should().Equal(0);
+            }
         }
 
-        public IEnumerable<QueryableFactory> QueryableImplementations()
+        public IEnumerable<Func<IEnumerable<Foo>, QueryableResult<Foo>>> QueryableImplementations()
         {
-            return new QueryableFactory[]
+            return new Func<IEnumerable<Foo>, QueryableResult<Foo>>[]
                 {
-                    s => s.AsQueryable()
+                    s => new QueryableResult<Foo>() { Queryable = s.AsQueryable()} , 
+                    FooSaver.GetInDatabase
                 };
         }
     }

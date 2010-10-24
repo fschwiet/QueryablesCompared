@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
+using QueryablesCompared.EF;
 using QueryablesCompared.NHibernate;
 using Should.Fluent;
 using Should.Fluent.Model;
@@ -17,9 +18,9 @@ namespace QueryablesCompared
     {
         [Test]
         [TestCaseSource("QueryableImplementations")]
-        public void take_after_sort(Func<IEnumerable<Foo>, QueryableResult<Foo>> getFooQueryable)
+        public void paging_before_where(Func<IEnumerable<Foo>, QueryableResult<Foo>> getFooQueryable)
         {
-            var inputs = Enumerable.Range(0, 20).Select(i => new Foo() {Value = i});
+            var inputs = Enumerable.Range(0, 20).Select(i => new Foo() { Value = i });
 
             using (var queryableResult = getFooQueryable(inputs))
             {
@@ -29,12 +30,27 @@ namespace QueryablesCompared
             }
         }
 
+        [Test]
+        [TestCaseSource("QueryableImplementations")]
+        public void where_before_paging(Func<IEnumerable<Foo>, QueryableResult<Foo>> getFooQueryable)
+        {
+            var inputs = Enumerable.Range(0, 20).Select(i => new Foo() { Value = i });
+
+            using (var queryableResult = getFooQueryable(inputs))
+            {
+                var result = queryableResult.Queryable.Where(f => f.Value < 5).OrderByDescending(f => f.Value).Take(5).ToArray();
+
+                result.Length.Should().Equal(5);
+            }
+        }
+
         public IEnumerable<Func<IEnumerable<Foo>, QueryableResult<Foo>>> QueryableImplementations()
         {
             return new Func<IEnumerable<Foo>, QueryableResult<Foo>>[]
                 {
                     s => new QueryableResult<Foo>() { Queryable = s.AsQueryable()} , 
-                    FooSaver.GetInDatabase
+                    FooSaver.GetInDatabase,
+                    FooEFSaver.GetInDatabase
                 };
         }
     }

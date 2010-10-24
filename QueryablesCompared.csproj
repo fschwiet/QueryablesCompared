@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>QueryablesCompared</RootNamespace>
     <AssemblyName>QueryablesCompared</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -45,6 +45,9 @@
     <Reference Include="Iesi.Collections">
       <HintPath>packages\Iesi.Collections.1.0.1\lib\Iesi.Collections.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Data.Entity.CTP">
+      <HintPath>packages\EFCTP4.1.0\lib\Microsoft.Data.Entity.CTP.dll</HintPath>
+    </Reference>
     <Reference Include="NHibernate">
       <HintPath>packages\NHibernate.Core.3.0.0.2001\lib\NHibernate.dll</HintPath>
     </Reference>
@@ -64,13 +67,19 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EF\FooContext.cs" />
+    <Compile Include="EF\FooEFSaver.cs" />
     <Compile Include="Foo.cs" />
+    <Compile Include="Models\EFTCP4SampleModel.cs" />
     <Compile Include="NHibernate\FooSaver.cs" />
     <Compile Include="NHibernate\Mappings\FooMapping.cs" />
     <Compile Include="NHibernate\Setup.cs" />

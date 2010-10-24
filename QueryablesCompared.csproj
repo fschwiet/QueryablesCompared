@@ -39,14 +39,29 @@
     <Reference Include="Castle.Core">
       <HintPath>packages\Castle.Core.2.5.1\lib\NET35\Castle.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Esent.Interop">
+      <HintPath>lib\ravendb\Esent.Interop.dll</HintPath>
+    </Reference>
     <Reference Include="FluentNHibernate">
       <HintPath>packages\FluentNHibernate.1.1.1.694\lib\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.NRefactory">
+      <HintPath>lib\ravendb\ICSharpCode.NRefactory.dll</HintPath>
     </Reference>
     <Reference Include="Iesi.Collections">
       <HintPath>packages\Iesi.Collections.1.0.1\lib\Iesi.Collections.dll</HintPath>
     </Reference>
+    <Reference Include="log4net">
+      <HintPath>lib\ravendb\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Lucene.Net">
+      <HintPath>lib\ravendb\Lucene.Net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Data.Entity.CTP">
       <HintPath>packages\EFCTP4.1.0\lib\Microsoft.Data.Entity.CTP.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>lib\ravendb\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate">
       <HintPath>packages\NHibernate.Core.3.0.0.2001\lib\NHibernate.dll</HintPath>
@@ -58,6 +73,18 @@
     <Reference Include="nunit.mocks, Version=2.5.7.10213, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL" />
     <Reference Include="pnunit.framework">
       <HintPath>packages\NUnit.2.5.7.10213\lib\pnunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Client">
+      <HintPath>lib\ravendb\Raven.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Database">
+      <HintPath>lib\ravendb\Raven.Database.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Storage.Esent">
+      <HintPath>lib\ravendb\Raven.Storage.Esent.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Storage.Managed">
+      <HintPath>lib\ravendb\Raven.Storage.Managed.dll</HintPath>
     </Reference>
     <Reference Include="Remotion.Data.Linq">
       <HintPath>packages\NHibernate.Core.3.0.0.2001\lib\Remotion.Data.Linq.dll</HintPath>
@@ -79,13 +106,14 @@
     <Compile Include="EF\FooContext.cs" />
     <Compile Include="EF\FooEFSaver.cs" />
     <Compile Include="Foo.cs" />
-    <Compile Include="Models\EFTCP4SampleModel.cs" />
     <Compile Include="NHibernate\FooSaver.cs" />
     <Compile Include="NHibernate\Mappings\FooMapping.cs" />
     <Compile Include="NHibernate\Setup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryableResult.cs" />
     <Compile Include="QueryOrderTests.cs" />
+    <Compile Include="RavenDB\FooRavenDBWithIndexSaver.cs" />
+    <Compile Include="RavenDB\FooRavenDBSaver.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

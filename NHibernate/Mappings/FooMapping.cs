@@ -10,7 +10,7 @@ namespace QueryablesCompared.NHibernate.Mappings
     {
         public FooMapping()
         {
-            Id(p => p.Id).GeneratedBy.Native();
+            Id(p => p.Identifier).GeneratedBy.Native();
             Map(p => p.Value);
         }
     }

@@ -16,7 +16,7 @@ namespace QueryablesCompared.EF
         {
             var modelBuilder = new ModelBuilder();
             modelBuilder.DiscoverEntitiesFromContext(typeof(FooContext));
-            modelBuilder.Entity<Foo>().HasKey(x => x.Id);
+            modelBuilder.Entity<Foo>().HasKey(x => x.Identifier);
             model = modelBuilder.CreateModel();
         }
 

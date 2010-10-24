@@ -5,6 +5,7 @@ using System.Text;
 using NUnit.Framework;
 using QueryablesCompared.EF;
 using QueryablesCompared.NHibernate;
+using QueryablesCompared.RavenDB;
 using Should.Fluent;
 using Should.Fluent.Model;
 
@@ -50,7 +51,9 @@ namespace QueryablesCompared
                 {
                     s => new QueryableResult<Foo>() { Queryable = s.AsQueryable()} , 
                     FooSaver.GetInDatabase,
-                    FooEFSaver.GetInDatabase
+                    FooEFSaver.GetInDatabase,
+                    FooRavenDBWithIndexSaver.GetInDatabase,
+                    FooRavenDBSaver.GetInDatabase
                 };
         }
     }

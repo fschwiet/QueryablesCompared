@@ -5,6 +5,7 @@ using System.Text;
 using NUnit.Framework;
 using QueryablesCompared.EF;
 using QueryablesCompared.NHibernate;
+using QueryablesCompared.Object;
 using QueryablesCompared.RavenDB;
 using Should.Fluent;
 using Should.Fluent.Model;
@@ -19,11 +20,11 @@ namespace QueryablesCompared
     {
         [Test]
         [TestCaseSource("QueryableImplementations")]
-        public void paging_before_where(Func<IEnumerable<Foo>, QueryableResult<Foo>> getFooQueryable)
+        public void paging_before_where(IPassthroughDatabase database)
         {
             var inputs = Enumerable.Range(0, 20).Select(i => new Foo() { Value = i });
 
-            using (var queryableResult = getFooQueryable(inputs))
+            using (var queryableResult = database.Passthrough(inputs))
             {
                 var result = queryableResult.Queryable.OrderByDescending(f => f.Value).Take(5).Where(f => f.Value < 5).ToArray();
 
@@ -33,11 +34,11 @@ namespace QueryablesCompared
 
         [Test]
         [TestCaseSource("QueryableImplementations")]
-        public void where_before_paging(Func<IEnumerable<Foo>, QueryableResult<Foo>> getFooQueryable)
+        public void where_before_paging(IPassthroughDatabase database)
         {
             var inputs = Enumerable.Range(0, 20).Select(i => new Foo() { Value = i });
 
-            using (var queryableResult = getFooQueryable(inputs))
+            using (var queryableResult = database.Passthrough(inputs))
             {
                 var result = queryableResult.Queryable.Where(f => f.Value < 5).OrderByDescending(f => f.Value).Take(5).ToArray();
 
@@ -45,15 +46,15 @@ namespace QueryablesCompared
             }
         }
 
-        public IEnumerable<Func<IEnumerable<Foo>, QueryableResult<Foo>>> QueryableImplementations()
+        public IPassthroughDatabase[] QueryableImplementations()
         {
-            return new Func<IEnumerable<Foo>, QueryableResult<Foo>>[]
+            return new IPassthroughDatabase[]
                 {
-                    s => new QueryableResult<Foo>() { Queryable = s.AsQueryable()} , 
-                    FooSaver.GetInDatabase,
-                    FooEFSaver.GetInDatabase,
-                    FooRavenDBWithIndexSaver.GetInDatabase,
-                    FooRavenDBSaver.GetInDatabase
+                    new ObjectPassthrough(),
+                    new NHPassthrough(),
+                    new EFPassthrough(),
+                    new RavenDBPassthrough(),
+                    new RavenDBWithoutIndexPassthrough()
                 };
         }
     }

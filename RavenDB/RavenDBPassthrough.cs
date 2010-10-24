@@ -10,9 +10,9 @@ using Raven.Database.Indexing;
 
 namespace QueryablesCompared.RavenDB
 {
-    public class FooRavenDBWithIndexSaver
+    public class RavenDBPassthrough : IPassthroughDatabase
     {
-        public static QueryableResult<Foo> GetInDatabase(IEnumerable<Foo> inputs)
+        public QueryableResult<Foo> Passthrough(IEnumerable<Foo> inputs)
         {
             var currentIndex = 0;
 

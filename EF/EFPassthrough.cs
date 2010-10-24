@@ -5,9 +5,9 @@ using System.Text;
 
 namespace QueryablesCompared.EF
 {
-    public class FooEFSaver
+    public class EFPassthrough : IPassthroughDatabase
     {
-        public static QueryableResult<QueryablesCompared.Foo> GetInDatabase(IEnumerable<QueryablesCompared.Foo> inputs)
+        public QueryableResult<QueryablesCompared.Foo> Passthrough(IEnumerable<QueryablesCompared.Foo> inputs)
         {
             using(var context = new FooContext(true))
             {

@@ -6,9 +6,9 @@ using NHibernate.Linq;
 
 namespace QueryablesCompared.NHibernate
 {
-    public class FooSaver
+    public class NHPassthrough : IPassthroughDatabase
     {
-        public static QueryableResult<Foo> GetInDatabase(IEnumerable<Foo> inputs)
+        public QueryableResult<Foo> Passthrough(IEnumerable<Foo> inputs)
         {
             using (var sessionFactory = Setup.GetSessionFactory(true))
             {

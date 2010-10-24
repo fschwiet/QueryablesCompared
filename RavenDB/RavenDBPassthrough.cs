@@ -14,17 +14,7 @@ namespace QueryablesCompared.RavenDB
     {
         public QueryableResult<Foo> Passthrough(IEnumerable<Foo> inputs)
         {
-            var currentIndex = 0;
-
-            var store = new DocumentStore()
-                {
-                    RunInMemory = true,
-                    Conventions = new DocumentConvention()
-                        {
-                            DocumentKeyGenerator = f => (currentIndex++).ToString()
-                        }
-                    
-                };
+            var store = new DocumentStore() { RunInMemory = true };
 
             store.Initialize();
 
